@@ -1,9 +1,12 @@
 # Iran Phone Number Generator
-- A simple C++ program that generates all possible Iran phone number.
-- Iran's phone numbers have such features :
-- They're length is eleven number
-- Two first number are constanst; "09"
-- Sometime you can change the first number with "+98" symbol (this is Iran's phone number international code).
-- So, These numbers are same:
+## General Information
+- A simple C++ program that generates all possible Iran phone numbers.
+- Iran's phone numbers have such features: Their length is eleven numbers; Their two first numbers are constant; "09"
+- Sometimes the first number is replaced with "+98" symbol (this is Iran's phone number international code).
+- So, These numbers are the same:
 - 01234567890
-- +981234567890 (first "0" changed to "+98")
+- +981234567890 (first "0" replaced with "+98")
+
+## Contact
+- Created by [Pouria Khakpour](https://github.com/0ne-zero) - feel free to contact me!
+- You can reach me by pouria.khakpour9909@gmail.com
