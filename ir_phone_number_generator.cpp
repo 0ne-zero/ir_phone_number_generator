@@ -4,8 +4,8 @@
 #include <vector>
 #include <sys/stat.h>
 
-const unsigned int BATCH_SIZE = 1000;
-const unsigned int LINEAR_SEARCH_SIZE = BATCH_SIZE / 10;
+const unsigned int BATCH_SIZE = 100000;
+const unsigned int LINEAR_SEARCH_SIZE = BATCH_SIZE / 1000;
 const std::string FILE_PATH = "all_phone_numbers.txt";
 const std::string PREFIX = "09";
 static std::vector<std::string> number_batch = {};
