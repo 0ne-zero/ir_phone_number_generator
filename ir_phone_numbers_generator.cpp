@@ -4,8 +4,8 @@
 #include <vector>
 #include <sys/stat.h>
 
-const unsigned int BATCH_SIZE = 100000;
-const unsigned int LINEAR_SEARCH_SIZE = BATCH_SIZE / 1000;
+const unsigned int BATCH_SIZE = 1000000;
+const unsigned int LINEAR_SEARCH_SIZE = BATCH_SIZE / 10000;
 const std::string FILE_PATH = "all_phone_numbers.txt";
 const std::string PREFIX = "09";
 static std::vector<std::string> number_batch = {};
@@ -62,9 +62,8 @@ inline bool is_file_exists(const std::string& path)
 	return (stat(path.c_str(), &buffer) == 0);
 }
 
-std::vector<std::string> read_file_numbers(std::fstream& file)
+std::vector<std::string> read_file_numbers(std::ifstream& file)
 {
-	file.seekg(0);
 	std::vector<std::string> lines;
 	std::string line;
 	while (std::getline(file, line))
@@ -73,13 +72,12 @@ std::vector<std::string> read_file_numbers(std::fstream& file)
 	}
 	return lines;
 }
-void write_number_to_file(std::fstream& file, const std::string& number)
+void append_number_to_file(std::ofstream& file, const std::string& number)
 {
-	file.seekg(0, std::ios::end);
-	file << number + "\n";
+	file << number << "\n";
 }
 
-bool is_file_empty(std::fstream& file)
+bool is_file_empty(std::ifstream& file)
 {
 	return file.peek() == std::fstream::traits_type::eof();
 }
@@ -115,32 +113,51 @@ int main()
 										{
 											std::cout << "Adding " + std::to_string(BATCH_SIZE) + " of numbers to file" << std::endl;
 
-											
-											std::fstream file{ FILE_PATH,std::ios::in | std::ios::app };
-											if (!file.is_open())
+											// open read file
+											std::ifstream in_file{ FILE_PATH };
+											if (!in_file.is_open())
 											{
 												std::cout << "We couldn't open/create file";
 												exit(EXIT_FAILURE);
 											}
-											std::vector<std::string> file_numbers{};
-											if (!is_file_empty(file))
+											// check emptiness
+											bool is_empty = is_file_empty(in_file);
+											// if isn't empty read numbers from it
+											std::vector<std::string> file_numbers;
+											if (!is_empty)
 											{
-												file_numbers = read_file_numbers(file);
+												file_numbers = read_file_numbers(in_file);
 											}
+											// close read file
+											in_file.close();
 
-											for (size_t i = 0; i < BATCH_SIZE - 1; i++)
+											// open append file
+											std::ofstream out_file {FILE_PATH,std::ios::app};
+											if (!out_file.is_open())
 											{
-												if (!is_number_exists_in_file(file_numbers, number_batch[i]))
+												std::cout << "We couldn't open/create file";
+												exit(EXIT_FAILURE);
+											}
+											for (size_t i = 0; i <= BATCH_SIZE - 1; i++)
+											{
+												if (is_empty)
 												{
-													write_number_to_file(file, number_batch[i]);
+													append_number_to_file(out_file,number_batch[i]);
 													std::cout << number_batch[i] + " Added to "+ FILE_PATH << std::endl;
 												}
-												else {
-													std::cout << number_batch[i] + " Is already added to " + FILE_PATH << std::endl;
+												else{
+													if (is_number_exists_in_file(file_numbers, number_batch[i]))
+													{
+														std::cout << number_batch[i] + " Is already added to " + FILE_PATH << std::endl;
+													}
+													else {
+														append_number_to_file(out_file, number_batch[i]);
+														std::cout << number_batch[i] + " Added to "+ FILE_PATH << std::endl;
+													}
 												}
 											}
 											number_batch.clear();
-											file.close();
+											out_file.close();
 										}
 										else {
 											std::cout << std::to_string(batch_size) + " Number generated" << std::endl;
