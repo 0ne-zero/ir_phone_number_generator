@@ -7,6 +7,7 @@
 - 01234567890
 - +981234567890 (first "0" replaced with "+98")
 
+این یک برنامه ی ساده ی "++C" هست که شماره تلفن های همراه ایران رو تولید میکنه.
 ## Contact
 - Created by [Pouria Khakpour](https://github.com/0ne-zero) - feel free to contact me!
 - You can reach me by pouria.khakpour9909@gmail.com
