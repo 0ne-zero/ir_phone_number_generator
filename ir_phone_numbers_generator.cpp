@@ -186,4 +186,5 @@ int main()
 			}
 		}
 	}
+	std::cout << "All numbers generated and saved in " << FILE_PATH << " file" << std::endl;
 }
