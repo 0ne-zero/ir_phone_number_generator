@@ -9,7 +9,7 @@
 #include <unistd.h>
 #endif
 
-const unsigned int BATCH_SIZE = 10000;
+const unsigned int BATCH_SIZE = 10000000;
 const unsigned int WAIT_TIME = 3;
 const std::string FILE_PATH = "all_phone_numbers.txt";
 const std::string PREFIX = "09";
